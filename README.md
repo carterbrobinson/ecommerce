@@ -1,81 +1,172 @@
-# E-commerce Dashboard
+# E-commerce Database & Dashboard
 
-A modern e-commerce dashboard built with Vue.js and Tailwind CSS.
+A full-stack simulation of an e-commerce backend and frontend system, with real-time analytics dashboards.
+
+Built using **PostgreSQL**, **MongoDB**, **Flask**, **Tailwind CSS**, and **Chart.js**.
+
+---
 
 ## Features
 
-- Sales analytics dashboard
-- Order management
-- Customer tracking
-- Product inventory overview
-- Responsive design with Tailwind CSS
+- Product Catalog: View and rate products
+- Shopping Cart: Add to cart, checkout, abandon cart
+- Analytics Dashboards:
+  - Top Rated Products (live average ratings)
+  - Top Selling Products (this quarter)
+  - Repeat Customers (month-over-month)
+  - Most Abandoned Products (based on cart activity)
+  - Product Affinity Analysis (frequently bought together)
+  - Customer Behavior Analysis (segments, patterns, trends)
+  - Database Comparison (PostgreSQL vs MongoDB)
+- Live Data: All charts and tables are based on real SQL queries and live user actions
+- Responsive Frontend: Built with Tailwind CSS
 
-## Prerequisites
+---
 
-- Node.js (v14 or higher)
-- npm or yarn
+## Tech Stack
 
-## Installation
+| Layer     | Technology            |
+|-----------|------------------------|
+| Backend   | Flask (Python 3.8+)     |
+| Databases | PostgreSQL (14+), MongoDB (8.0+) |
+| Frontend  | Tailwind CSS, Chart.js  |
+| ORM       | psycopg2, pymongo       |
+| Data Gen  | Faker (dummy data)      |
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd final-project
-```
-
-2. Navigate to the Vue.js project directory:
-```bash
-cd ecommerce/ecommerce-vue
-```
-
-3. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-```
-
-4. Start the development server:
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-The application will be available at `http://localhost:5173` (or another port if 5173 is in use).
+---
 
 ## Project Structure
 
 ```
-ecommerce-vue/
-├── src/
-│   ├── assets/      # Static assets
-│   ├── components/  # Vue components
-│   ├── views/       # Page components
-│   ├── App.vue      # Root component
-│   └── main.js      # Application entry point
-├── public/          # Public static assets
-└── package.json     # Project dependencies and scripts
+ecommerce-db/
+├── app/                # Flask app
+│   ├── static/         # Tailwind CSS
+│   ├── templates/      # Jinja2 templates (HTML)
+│   └── app.py          # Flask backend
+├── database/
+│   ├── schema.sql      # PostgreSQL schema
+│   ├── dummy_data.sql  # Generated dummy data
+│   └── queries.sql     # Example SQL queries
+├── migrate_to_mongodb.py  # MongoDB migration script
+├── generate_data.py    # Faker script to generate dummy data
+├── db_init.py          # Initializes database with schema + data
+├── requirements.txt    # Python package requirements
+└── README.md           # Project documentation
 ```
+
+---
+
+## Setup Instructions
+
+### 1. Install Python dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 2. Start PostgreSQL and MongoDB
+
+Make sure both databases are running locally:
+
+For PostgreSQL:
+```bash
+brew services start postgresql
+```
+
+For MongoDB:
+```bash
+brew services start mongodb-community
+```
+
+or manually start your services if you are on Linux/Windows.
+
+---
+
+### 3. Configure Database Connections
+
+Open `app/app.py` and modify these values to match your local setup:
+
+```python
+# PostgreSQL Configuration
+DB_NAME = "postgres"
+DB_USER = "your_postgres_username"
+DB_PASSWORD = "your_postgres_password"
+DB_HOST = "localhost"
+DB_PORT = "5432"
+
+# MongoDB Configuration
+MONGO_URI = "mongodb://localhost:27017/"
+```
+
+---
+
+### 4. Initialize Databases
+
+1. Initialize PostgreSQL:
+```bash
+python db_init.py
+```
+
+2. Generate dummy data:
+```bash
+python generate_data.py
+```
+
+3. Migrate data to MongoDB:
+```bash
+python migrate_to_mongodb.py
+```
+
+---
+
+## Features in Detail
+
+### Customer Behavior Analysis
+- Customer segmentation (VIP, Regular, Casual)
+- Product performance tracking
+- Category analysis and retention rates
+- Peak shopping time analysis
+
+### Product Affinity
+- Identifies frequently bought together products
+- Calculates affinity percentages
+- Visualizes product relationships
+
+### Database Comparison
+- Side-by-side comparison of PostgreSQL and MongoDB
+- Query performance analysis
+- Data structure visualization
+- Use case recommendations
+
+---
 
 ## Development
 
-- The project uses Vue.js 3 with the Composition API
-- Styling is handled with Tailwind CSS
-- Components are organized by feature in the `components` directory
-- Page layouts are stored in the `views` directory
-
-## Building for Production
-
-To create a production build:
+### Running the Application
 
 ```bash
-npm run build
-# or
-yarn build
+python app/app.py
 ```
 
-The built files will be in the `dist` directory.
+The application will be available at `http://localhost:5001`
+
+### Generating New Data
+
+To generate new dummy data:
+```bash
+python generate_data.py
+```
+
+### Migrating Data
+
+To migrate data from PostgreSQL to MongoDB:
+```bash
+python migrate_to_mongodb.py
+```
+
+---
 
 ## Contributing
 
@@ -85,6 +176,9 @@ The built files will be in the `dist` directory.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+---
+
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
